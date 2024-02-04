@@ -30,8 +30,10 @@ export const register = async (req, res) => {
       impressions: Math.floor(Math.random() * 1000),
     });
     const savedUser = await newUser.save();
-    res.status(200).json(savedUser);
-  } catch (error) {}
+    res.status(200).json({savedUser,success:true});
+  } catch (error) {
+     res.status(400).json({error:"Failed to create User"});
+  }
 };
 
 /*Login*/
@@ -46,7 +48,7 @@ export const login = async (req, res) => {
     if (!isMatch) return res.status(400).json({ msg: "invalid Credentials" });
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     delete user.password;
-    res.status(200).json({ token, user });
+    res.status(200).json({ token, user,success:true });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
