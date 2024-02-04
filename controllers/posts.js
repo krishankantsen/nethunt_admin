@@ -27,7 +27,7 @@ export const createPost = async (req, res) => {
 /*READ*/
 export const getFeedPosts = async (req, res) => {
   try {
-    const posts = await Post.find();  // Await the result of Post.find()
+    const posts = await Post.find().sort({createdAt:-1});  // Await the result of Post.find()
     console.log(posts);
     res.status(200).json(posts);
   } catch (error) {
